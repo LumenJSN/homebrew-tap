@@ -1,6 +1,6 @@
 cask "aris" do
-  version "1.1.0"
-  sha256 "96f6f91edaf6af8b721bd8644030001a792a62a7b5f94252ae54e8cc06f3a9b0"
+  version "1.2.0"
+  sha256 "f6609b877e117ff8b2a3d0f52773ec02a79e98160882614b8fbec267eae5edee"
 
   url "https://github.com/LumenJSN/Aris/releases/download/v#{version}/Aris-#{version}.dmg"
   name "Aris"
