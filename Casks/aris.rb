@@ -5,7 +5,7 @@ cask "aris" do
   url "https://github.com/LumenJSN/Aris/releases/download/v#{version}/Aris-#{version}.dmg"
   name "Aris"
   desc "Agent for everything on your desktop, in the MacBook notch"
-  homepage "https://arismac.app"
+  homepage "https://arismac.app/"
 
   livecheck do
     url :url
@@ -13,16 +13,14 @@ cask "aris" do
   end
 
   depends_on arch: :arm64
-  depends_on macos: ">= :sonoma"
+  depends_on macos: :sonoma
 
   app "Aris.app"
 
   # Aris is ad-hoc signed and not notarized (the project has no Developer ID), so Gatekeeper would refuse the
   # first launch. Clear the download quarantine flag on the copy this cask installed.
-  postflight do
-    system_command "/usr/bin/xattr",
-                   args: ["-dr", "com.apple.quarantine", "#{appdir}/Aris.app"],
-                   sudo: false
+  postflight_steps do
+    run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/Aris.app"]
   end
 
   uninstall quit: "com.lumenjsn.aris"
