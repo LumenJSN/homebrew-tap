@@ -1,6 +1,6 @@
 cask "aris" do
-  version "1.2.1"
-  sha256 "734083375c71dcd21be1febb064e6f89e418cf69c05aed0d462bc61d985d8b58"
+  version "1.3.0"
+  sha256 "0aec332c6be50f99de2c769f2e25cb6cc5e06cd3f19530cb3b94205855a2ea56"
 
   url "https://github.com/LumenJSN/Aris/releases/download/v#{version}/Aris-#{version}.dmg"
   name "Aris"
@@ -12,13 +12,14 @@ cask "aris" do
     strategy :github_latest
   end
 
+  auto_updates true
   depends_on arch: :arm64
   depends_on macos: :sonoma
 
   app "Aris.app"
 
-  # Aris is ad-hoc signed and not notarized (the project has no Developer ID), so Gatekeeper would refuse the
-  # first launch. Clear the download quarantine flag on the copy this cask installed.
+  # Aris is signed with its own self-signed certificate and not notarized (the project has no Developer ID), so
+  # Gatekeeper would refuse the first launch. Clear the download quarantine flag on the copy this cask installed.
   postflight_steps do
     run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/Aris.app"]
   end
@@ -34,6 +35,7 @@ cask "aris" do
   caveats <<~EOS
     Aris is not notarized. This cask clears the quarantine flag after installing, so macOS opens it without the
     "Apple could not verify" prompt. Only install Aris from this tap or github.com/LumenJSN/Aris/releases.
-    After each update macOS sees a new program: grant Aris's permissions again in System Settings if asked.
+    From 1.3 on Aris updates itself (the notice pill under the notch) and keeps its permissions. Coming from
+    1.2.x, grant Aris's permissions once more in System Settings if asked.
   EOS
 end
